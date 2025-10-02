@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Lunch - Admin Portal</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Admin-specific styles that extend the main design system */
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-6);
+            min-height: 100vh;
+        }
+        
+        .admin-header {
+            background: white;
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            margin-bottom: var(--space-8);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .admin-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+        
+        .admin-title h1 {
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 0;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: var(--space-3);
+        }
+        
+        .admin-section {
+            background: white;
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            margin-bottom: var(--space-8);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .admin-section h3 {
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+        
+        .admin-section h3 i {
+            color: var(--primary-color);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: var(--space-2);
+            font-size: var(--font-size-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .form-group input {
+            padding: var(--space-3) var(--space-4);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            transition: all var(--transition-fast);
+            background: white;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-6);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--accent-color), #059669);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--secondary-color), #d97706);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+            color: white;
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--gray-200);
+        }
+        
+        .items-table-container {
+            overflow-x: auto;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        .items-table th {
+            background: var(--gray-50);
+            padding: var(--space-4);
+            text-align: left;
+            font-weight: 600;
+            color: var(--gray-700);
+            border-bottom: 1px solid var(--gray-200);
+            font-size: var(--font-size-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .items-table td {
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: middle;
+        }
+        
+        .items-table tr:hover {
+            background: var(--gray-50);
+        }
+        
+        .items-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: var(--radius-lg);
+            background: var(--gray-100);
+        }
+        
+        .item-image-placeholder {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-lg);
+        }
+        
+        .item-name {
+            font-weight: 600;
+            color: var(--gray-900);
+            font-size: var(--font-size-lg);
+        }
+        
+        .item-price {
+            font-weight: 700;
+            color: var(--accent-color);
+            font-size: var(--font-size-xl);
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: var(--space-2);
+        }
+        
+        .edit-form {
+            display: none;
+            background: var(--gray-50);
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            margin-top: var(--space-4);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .edit-form.active {
+            display: block;
+        }
+        
+        .edit-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+        
+        .edit-form-actions {
+            display: flex;
+            gap: var(--space-3);
+        }
+        
+        .status-message {
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-6);
+            display: none;
+            font-weight: 500;
+        }
+        
+        .status-success {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+        
+        .status-error {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #991b1b;
+            border: 1px solid #f87171;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: var(--space-16) var(--space-8);
+            color: var(--gray-500);
+        }
+        
+        .empty-state i {
+            font-size: var(--font-size-5xl);
+            color: var(--gray-300);
+            margin-bottom: var(--space-4);
+        }
+        
+        .empty-state h3 {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: var(--space-2);
+        }
+        
+        .empty-state p {
+            color: var(--gray-500);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: var(--space-4);
+            }
+            
+            .admin-title {
+                flex-direction: column;
+                gap: var(--space-4);
+                align-items: stretch;
+            }
+            
+            .admin-actions {
+                justify-content: center;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .edit-form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .item-actions {
+                flex-direction: column;
+            }
+            
+            .items-table-container {
+                font-size: var(--font-size-sm);
+            }
+            
+            .items-table th,
+            .items-table td {
+                padding: var(--space-3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-utensils"></i>
+                <span>Budget Lunch Admin</span>
+            </div>
+            <div class="nav-actions">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+                <button onclick="logout()" class="nav-link" style="background: var(--danger-color);">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <!-- Admin Header -->
+        <div class="admin-header">
+            <div class="admin-title">
+                <h1>
+                    <i class="fas fa-cog"></i>
+                    Admin Portal
+                </h1>
+                <div class="admin-actions">
+                    <button class="btn btn-info" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh List
+                    </button>
+                </div>
+            </div>
+            <p style="color: var(--gray-600); font-size: var(--font-size-lg); margin: 0;">
+                Manage your food items with full CRUD operations. Add, edit, delete, and view all items in your database.
+            </p>
+        </div>
+        
+        <!-- Status Messages -->
+        <div id="statusMessage" class="status-message"></div>
+        
+        <!-- Add New Item Section -->
+        <div class="admin-section">
+            <h3>
+                <i class="fas fa-plus-circle"></i>
+                Add New Item
+            </h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="addName">Food Name</label>
+                    <input type="text" id="addName" placeholder="Enter food name">
+                </div>
+                <div class="form-group">
+                    <label for="addPrice">Price ($)</label>
+                    <input type="number" id="addPrice" placeholder="Enter price" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="addImageUrl">Image URL</label>
+                    <input type="text" id="addImageUrl" placeholder="Enter image URL">
+                </div>
+            </div>
+            <button class="btn btn-primary" id="addBtn">
+                <i class="fas fa-plus"></i>
+                Add Item
+            </button>
+        </div>
+        
+        <!-- List All Items Section -->
+        <div class="admin-section">
+            <h3>
+                <i class="fas fa-list"></i>
+                All Items
+            </h3>
+            <div id="itemsList">
+                <div class="empty-state">
+                    <i class="fas fa-database"></i>
+                    <h3>No items loaded</h3>
+                    <p>Click "Refresh List" to load all items from the database.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/admin.js"></script>
+</body>
+</html>
