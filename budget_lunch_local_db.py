@@ -75,4 +75,4 @@ def show_hello_world():
     return "Welcome to CS4800 Software Engineering"
 
 
-# app.run(host = "0.0.0.0", port = 5002)
+app.run(host = "0.0.0.0", port = 5002)
