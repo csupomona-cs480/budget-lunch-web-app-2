@@ -517,6 +517,135 @@ body {
     line-height: 1.6;
 }
 
+/* Brands Section */
+.brands-section {
+    padding: var(--space-20) 0;
+    background: white;
+}
+
+.brands-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+}
+
+.brands-title {
+    text-align: center;
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: var(--space-3);
+}
+
+.brands-subtitle {
+    text-align: center;
+    font-size: var(--font-size-lg);
+    color: var(--gray-600);
+    margin-bottom: var(--space-16);
+}
+
+.brands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-6);
+}
+
+.brand-card {
+    background: white;
+    padding: var(--space-6);
+    border-radius: var(--radius-2xl);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--gray-200);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+}
+
+.brand-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+}
+
+.brand-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--space-4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: var(--font-size-3xl);
+    transition: transform var(--transition-normal);
+}
+
+.brand-card:hover .brand-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Brand-specific colors */
+.brand-icon.mcdonalds {
+    background: linear-gradient(135deg, #FFC72C, #DA291C);
+}
+
+.brand-icon.subway {
+    background: linear-gradient(135deg, #00923F, #FFCC00);
+}
+
+.brand-icon.chipotle {
+    background: linear-gradient(135deg, #A81612, #F0D0C2);
+}
+
+.brand-icon.tacobell {
+    background: linear-gradient(135deg, #702082, #A77BCA);
+}
+
+.brand-icon.panera {
+    background: linear-gradient(135deg, #739A52, #3E5622);
+}
+
+.brand-icon.starbucks {
+    background: linear-gradient(135deg, #00704A, #006341);
+}
+
+.brand-icon.kfc {
+    background: linear-gradient(135deg, #E4002B, #F40027);
+}
+
+.brand-icon.pizzahut {
+    background: linear-gradient(135deg, #EE3124, #00A878);
+}
+
+.brand-icon.wendys {
+    background: linear-gradient(135deg, #E31837, #0098DB);
+}
+
+.brand-icon.dominos {
+    background: linear-gradient(135deg, #0B648F, #E31837);
+}
+
+.brand-icon.bk {
+    background: linear-gradient(135deg, #F5A623, #D62300);
+}
+
+.brand-icon.chick {
+    background: linear-gradient(135deg, #DD0031, #E51837);
+}
+
+.brand-card h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: var(--space-2);
+}
+
+.brand-card p {
+    color: var(--gray-600);
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+}
+
 /* Footer */
 .footer {
     background: var(--gray-900);
@@ -699,6 +828,11 @@ body {
         grid-template-columns: 1fr;
     }
     
+    .brands-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+    }
+    
     .footer-container {
         grid-template-columns: 1fr;
         gap: var(--space-8);
@@ -739,7 +873,16 @@ body {
     }
     
     .results-container,
-    .features-container {
+    .features-container,
+    .brands-container {
         padding: 0 var(--space-4);
+    }
+    
+    .brands-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .brands-title {
+        font-size: var(--font-size-3xl);
     }
 }
