@@ -341,3 +341,16 @@ coverage/
 *.bak
 *.backup
 *.orig
+
+# SSH Keys and Security
+*.pem
+*.key
+*.ppk
+id_rsa
+id_rsa.pub
+*.crt
+*.csr
+authorized_keys
+
+# Deployment specific
+app.pid
