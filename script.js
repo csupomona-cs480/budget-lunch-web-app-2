@@ -23,7 +23,74 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.borderColor = '#e5e7eb';
         }
     });
+
+    // Create scroll-to-top button
+    createScrollToTopButton();
+
+    // Add navbar scroll effect
+    addNavbarScrollEffect();
+
+    // Add smooth scroll for anchor links
+    addSmoothScrolling();
 });
+
+// Create and add scroll-to-top button
+function createScrollToTopButton() {
+    const scrollBtn = document.createElement('button');
+    scrollBtn.className = 'scroll-to-top';
+    scrollBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    scrollBtn.setAttribute('aria-label', 'Scroll to top');
+    document.body.appendChild(scrollBtn);
+
+    // Show/hide button based on scroll position
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            scrollBtn.classList.add('visible');
+        } else {
+            scrollBtn.classList.remove('visible');
+        }
+    });
+
+    // Scroll to top on click
+    scrollBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// Add navbar scroll effect
+function addNavbarScrollEffect() {
+    const navbar = document.querySelector('.navbar');
+    
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+}
+
+// Add smooth scrolling for anchor links
+function addSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+    });
+}
 
 function performSearch() {
     const budget = document.getElementById('price').value;
@@ -89,13 +156,13 @@ function displayResults(foods, budget) {
         <div class="food-grid">
     `;
     
-    foods.forEach(food => {
+    foods.forEach((food, index) => {
         const imageHtml = food.imageurl ? 
             `<img src="${food.imageurl}" alt="${food.name}" class="food-image" onerror="this.style.display='none'">` : 
             `<div class="food-image-placeholder"><i class="fas fa-utensils"></i></div>`;
         
         html += `
-            <div class="food-item">
+            <div class="food-item" style="--item-index: ${index};">
                 ${imageHtml}
                 <div class="food-details">
                     <div class="food-name">${food.name}</div>
@@ -107,6 +174,11 @@ function displayResults(foods, budget) {
     
     html += `</div>`;
     resultDiv.innerHTML = html;
+    
+    // Smooth scroll to results
+    setTimeout(() => {
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
 }
 
 function setLoadingState(isLoading) {

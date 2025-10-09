@@ -6,125 +6,207 @@
     <title>Budget Lunch - Admin Login</title>
     <link rel="stylesheet" href="/styles.css">
     <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
         .login-container {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 40px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            margin: 40px 20px;
+            padding: 48px;
+            background: white;
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-2xl);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .login-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
         
         .login-header h1 {
-            color: #333;
-            margin-bottom: 10px;
+            color: var(--gray-900);
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: 8px;
         }
         
         .login-header p {
-            color: #666;
-            font-size: 14px;
+            color: var(--gray-600);
+            font-size: var(--font-size-base);
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: var(--font-size-sm);
         }
         
         .form-group input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
+            padding: 14px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
             box-sizing: border-box;
+            transition: all var(--transition-normal);
+            font-family: var(--font-family);
+        }
+
+        .form-group input:hover {
+            border-color: var(--gray-300);
         }
         
         .form-group input:focus {
             outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            transform: translateY(-1px);
         }
         
         .login-btn {
             width: 100%;
-            padding: 12px;
-            background-color: #007bff;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
             border: none;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .login-btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
         
         .login-btn:hover {
-            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
         }
         
         .login-btn:disabled {
-            background-color: #6c757d;
+            opacity: 0.7;
             cursor: not-allowed;
+            transform: none;
         }
         
         .error-message {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
+            background-color: #fef2f2;
+            color: var(--danger-color);
+            padding: 14px 16px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+            border: 1px solid #fecaca;
             display: none;
+            animation: shake 0.4s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
         
         .success-message {
-            background-color: #d4edda;
-            color: #155724;
-            padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            border: 1px solid #c3e6cb;
+            background-color: #f0fdf4;
+            color: var(--accent-color);
+            padding: 14px 16px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+            border: 1px solid #bbf7d0;
             display: none;
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .back-link {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 24px;
         }
         
         .back-link a {
-            color: #007bff;
+            color: var(--primary-color);
             text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-fast);
         }
         
         .back-link a:hover {
+            color: var(--primary-dark);
             text-decoration: underline;
         }
         
         .loading {
             display: none;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 16px;
+            color: var(--gray-600);
         }
         
         .spinner {
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #007bff;
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary-color);
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
+            width: 24px;
+            height: 24px;
+            animation: spin 0.8s linear infinite;
             display: inline-block;
+            margin-right: 8px;
+            vertical-align: middle;
         }
         
         @keyframes spin {
@@ -138,29 +220,32 @@
             background: var(--gray-100);
             border-radius: var(--radius-lg);
             padding: 4px;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
         }
         
         .toggle-btn {
             flex: 1;
-            padding: 12px 16px;
+            padding: 12px 20px;
             border: none;
             background: transparent;
             border-radius: var(--radius-md);
             font-weight: 600;
             color: var(--gray-600);
             cursor: pointer;
-            transition: all var(--transition-fast);
+            transition: all var(--transition-normal);
+            font-size: var(--font-size-base);
         }
         
         .toggle-btn.active {
             background: white;
             color: var(--primary-color);
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-md);
+            transform: scale(1.02);
         }
         
         .toggle-btn:hover:not(.active) {
             color: var(--gray-800);
+            background: rgba(255, 255, 255, 0.5);
         }
         
         /* Auth Forms */
@@ -170,13 +255,30 @@
         
         .auth-form.active {
             display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
         .password-hint {
             display: block;
             color: var(--gray-500);
-            font-size: 12px;
-            margin-top: 4px;
+            font-size: var(--font-size-xs);
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        /* Focus styles for accessibility */
+        *:focus-visible {
+            outline: 3px solid var(--primary-color);
+            outline-offset: 2px;
         }
     </style>
 </head>
