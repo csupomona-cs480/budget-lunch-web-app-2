@@ -1,0 +1,26 @@
+Deployment Instructions:
+========================
+
+AUTOMATED WAY (Recommended):
+1. push the change to GitHub
+2. login to the EC2 server
+3. run: ./deploy.sh
+   (This handles steps 3-7 automatically!)
+
+MANUAL WAY:
+1. push the change to GitHub
+2. login to the server
+3. pull the latest change from GitHub
+4. get into the virtual environment
+5. pip install all the dependencies 
+6. kill the running python process
+7. rerun the server with nohup in background
+
+Management Commands:
+===================
+./manage.sh status    # Check app status
+./manage.sh logs -f   # View logs
+./manage.sh restart   # Restart app
+./manage.sh stop      # Stop app
+
+See DEPLOYMENT.md for full documentation 
